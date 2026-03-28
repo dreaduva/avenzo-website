@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avenzo | Premium Finanz & Versicherungen</title>
+    <!-- Tailwind CSS with custom config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#050706',
+                            green: '#1c5a4b',
+                            'green-light': '#34a088',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --ease-premium: cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        body {
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s var(--ease-premium), color 0.4s var(--ease-premium);
+        }
+
+        /* Ambient Global Glow */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(28, 90, 75, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(28, 90, 75, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+            animation: breatheGlow 10s ease-in-out infinite alternate;
+            transition: background 0.5s ease;
+        }
+
+        html:not(.dark) .ambient-bg {
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(52, 160, 136, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(52, 160, 136, 0.05) 0%, transparent 50%);
+        }
+
+        @keyframes breatheGlow {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Navigation Glass */
+        .nav-glass {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+        html.dark .nav-glass {
+            background: rgba(5, 7, 6, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        html:not(.dark) .nav-glass {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hero Text Variables */
+        .text-huge {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+        }
+
+        .text-highlight-line {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .text-highlight-line::after {
+            content: '';
+            position: absolute;
+            bottom: 8%; left: -2px; right: -2px; height: 30%;
+            z-index: -1;
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: highlightGrow 1s var(--ease-premium) forwards;
+            animation-delay: 0.8s;
+            transition: background 0.4s ease;
+        }
+
+        html.dark .text-highlight-line::after {
+            background: var(--brand-green);
+            box-shadow: 0 0 20px rgba(28, 90, 75, 0.5);
+        }
+        
+        html:not(.dark) .text-highlight-line::after {
+            background: var(--brand-green-light);
+            box-shadow: 0 0 20px rgba(52, 160, 136, 0.3);
+            opacity: 0.8;
+        }
+
+        @keyframes highlightGrow {
+            to { transform: scaleX(1); }
+        }
+
+        /* Custom Hover & Interactive Classes */
+        .btn-primary {
+            transition: transform 0.3s var(--ease-premium), box-shadow 0.3s var(--ease-premium), background 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .glass-card {
+            transition: all 0.4s var(--ease-premium);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
+        }
+        html:not(.dark) .glass-card::before {
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, transparent 100%);
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        html.dark .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(52, 160, 136, 0.2);
+        }
+        html:not(.dark) .glass-card:hover {
+            border-color: rgba(28, 90, 75, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(52, 160, 136, 0.1);
+        }
+
+        .icon-bounce { transition: all 0.4s var(--ease-premium); }
+        .glass-card:hover .icon-bounce { transform: scale(1.1) translateY(-2px); }
+
+        /* Abstract UI Mockup Elements */
+        .floating-mockup {
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 2px;
+            overflow: hidden;
+            animation: floatUp 1.5s var(--ease-premium) forwards;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.4s ease;
+        }
+
+        html.dark .floating-mockup {
+            background: linear-gradient(180deg, #111111 0%, #050706 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(28, 90, 75, 0.2);
+        }
+        html:not(.dark) .floating-mockup {
+            background: linear-gradient(180deg, #ffffff 0%, #f8faf9 100%);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.05), 0 0 40px rgba(28, 90, 75, 0.1);
+        }
+
+        @keyframes floatUp { to { opacity: 1; transform: translateY(0); } }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes slideRight {
+            0% { transform: translateX(-100%) skewX(-12deg); }
+            100% { transform: translateX(300%) skewX(-12deg); }
+        }
+
+        /* 3D Phone Hover */
+        .phone-3d {
+            transform: perspective(1200px) rotateY(-12deg) rotateX(5deg) scale(1.02);
+            transition: all 0.7s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .phone-3d:hover {
+            transform: perspective(1200px) rotateY(0deg) rotateX(0deg) scale(1.05);
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        @keyframes scanLaser {
+            0%, 100% { top: 10%; opacity: 0; }
+            10%, 90% { opacity: 1; }
+            50% { top: 90%; }
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes screenFade1 {
+            0%, 25% { opacity: 1; transform: scale(1); pointer-events: auto; }
+            30%, 100% { opacity: 0; transform: scale(0.95); pointer-events: none; }
+        }
+        @keyframes screenFade2 {
+            0%, 25% { opacity: 0; transform: scale(1.05); pointer-events: none; }
+            30%, 60% { opacity: 1; transform: scale(1); pointer-events: auto; }
+            65%, 100% { opacity: 0; transform: scale(0.95); pointer-events: none; }
+        }
+        @keyframes screenFade3 {
+            0%, 60% { opacity: 0; transform: scale(1.05); pointer-events: none; }
+            65%, 95% { opacity: 1; transform: scale(1); pointer-events: auto; }
+            100% { opacity: 0; transform: scale(0.95); pointer-events: none; }
+        }
+
+        /* Infinite Marquee */
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 30s linear infinite; display: flex; width: max-content; }
+        .animate-marquee:hover { animation-play-state: paused; }
+
+        /* Scroll Reveal Utility */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s var(--ease-premium); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Theme Toggle SVGs */
+        html.dark .sun-icon { display: block; }
+        html.dark .moon-icon { display: none; }
+        html:not(.dark) .sun-icon { display: none; }
+        html:not(.dark) .moon-icon { display: block; }
+
+        /* Logo Inversion */
+        html.dark .logo-main { filter: brightness(0) invert(1); }
+        html:not(.dark) .logo-main { filter: brightness(0); } /* Black on light bg */
+        html:not(.dark) .logo-white-only { filter: brightness(0) invert(1); } /* Always white for dark footers */
+    </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-brand-dark dark:text-white transition-colors duration-300">
+
+    <div class="ambient-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 nav-glass">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center">
+                <img src="avenzo-svg.svg" alt="Avenzo Logo" class="logo-main h-6 object-contain transition-all duration-300"
+                    onerror="this.parentElement.innerHTML='<span style=\'font-weight:800;letter-spacing:0.1em;font-size:1.2rem;\'>AVENZO</span>'">
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#services" class="text-gray-600 dark:text-gray-300 hover:text-brand-green dark:hover:text-white transition">Expertise</a>
+                <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-brand-green dark:hover:text-white transition">Plattform</a>
+                <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-brand-green dark:hover:text-white transition">Ablauf</a>
+                <a href="#testimonials" class="text-gray-600 dark:text-gray-300 hover:text-brand-green dark:hover:text-white transition">Kunden</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 transition-colors text-gray-800 dark:text-white" aria-label="Toggle Dark Mode">
+                    <svg class="sun-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg class="moon-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <a href="#contact" class="btn-primary bg-gray-900 text-white hover:bg-black dark:bg-white dark:text-brand-dark dark:hover:bg-gray-100 px-6 py-2.5 rounded-full font-bold shadow-lg">Login</a>
+            </div>
+
+            <!-- Mobile Menu Btn -->
+            <button class="md:hidden text-gray-800 dark:text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-40 md:pt-48 pb-0 flex flex-col items-center justify-center text-center px-6 min-h-[90vh]">
+        <div class="max-w-4xl mx-auto z-10 w-full">
+            <div class="text-[0.85rem] uppercase tracking-[0.3em] font-bold text-brand-green dark:text-brand-green-light mb-6 animate__animated animate__fadeInDown">
+                Pionier für digitale Finanzen
+            </div>
+            
+            <h1 class="text-huge font-extrabold animate__animated animate__fadeInUp text-gray-900 dark:text-white" style="animation-delay: 0.2s;">
+                Die neue Dimension für deine <span class="text-highlight-line text-brand-dark dark:text-white">Finanzen.</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-8 mb-6 leading-relaxed font-medium animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                Steuererklärung, Versicherungen und Treuhand — Experten-Service 100% digital, effizient und sicher. Maximale Ersparnis ohne den lästigen Papierkram.
+            </p>
+
+            <!-- Social Proof Avatars -->
+            <div class="flex items-center justify-center gap-3 mb-8 animate__animated animate__fadeInUp" style="animation-delay: 0.5s;">
+                <div class="flex -space-x-3">
+                    <img class="w-10 h-10 rounded-full border-2 border-white dark:border-[#050706] object-cover" src="https://i.pravatar.cc/100?img=68" alt="User">
+                    <img class="w-10 h-10 rounded-full border-2 border-white dark:border-[#050706] object-cover" src="https://i.pravatar.cc/100?img=47" alt="User">
+                    <img class="w-10 h-10 rounded-full border-2 border-white dark:border-[#050706] object-cover" src="https://i.pravatar.cc/100?img=33" alt="User">
+                    <img class="w-10 h-10 rounded-full border-2 border-white dark:border-[#050706] object-cover" src="https://i.pravatar.cc/100?img=12" alt="User">
+                    <div class="w-10 h-10 rounded-full border-2 border-white dark:border-[#050706] bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-900 dark:text-white z-10">+10k</div>
+                </div>
+                <div class="text-left">
+                    <div class="flex text-yellow-400 text-[10px] tracking-widest mb-0.5">★★★★★</div>
+                    <div class="text-xs font-bold text-gray-600 dark:text-gray-400 leading-none">Beliebt in der Schweiz</div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                <a href="#contact" class="btn-primary w-full sm:w-auto bg-brand-green text-white hover:bg-[#1a4b40] dark:bg-white dark:text-brand-dark dark:hover:bg-gray-100 px-8 py-4 rounded-full font-bold shadow-[0_10px_30px_rgba(28,90,75,0.2)] dark:shadow-[0_10px_30px_rgba(255,255,255,0.1)] text-lg">
+                    Jetzt kostenlos starten
+                </a>
+                <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-lg border border-gray-300 dark:border-white/20 text-gray-800 dark:text-white bg-white/50 dark:bg-white/5 backdrop-blur-md hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-300">
+                    Services entdecken
+                </a>
+            </div>
+            
+            <!-- Micro Trust Signals -->
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-[0.7rem] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest animate__animated animate__fadeInUp" style="animation-delay: 0.7s;">
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-brand-green dark:text-brand-green-light" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    In 3 Minuten startklar
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-brand-green dark:text-brand-green-light" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    Banken-Sicherheit
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-brand-green dark:text-brand-green-light" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    100% Transparent
+                </span>
+            </div>
+        </div>
+
+
+        <!-- Hero Interactive Section: Tabs + iPhone Mockup -->
+        <div class="w-full max-w-5xl mx-auto mt-16 md:mt-24 relative z-10 flex flex-col md:flex-row items-center md:items-start justify-center gap-10 md:gap-24 animate__animated animate__fadeInUp" style="animation-delay: 0.75s;">
+            <!-- Vertical App Selection Tabs (Side) -->
+            <div class="relative z-30 flex order-first md:mt-[150px] w-full md:w-auto px-4 md:px-0">
+                 <div class="glass-card bg-white/50 dark:bg-[#0a0f0d]/50 p-2 md:p-3 rounded-full md:rounded-[2rem] flex flex-row md:flex-col gap-2 border border-gray-200 dark:border-white/10 shadow-lg backdrop-blur-xl w-full">
+                     <button onclick="switchApp('steuer')" id="tab-steuer" class="flex-1 md:flex-none px-4 md:px-8 py-3 md:py-4 rounded-full md:rounded-2xl text-xs md:text-sm font-bold bg-brand-green text-white shadow-md transition-all duration-300 flex items-center justify-center md:justify-start gap-4 w-full">
+                         <span class="hidden md:inline-block w-2 h-2 rounded-full bg-white shrink-0"></span> Steuer
+                     </button>
+                     <button onclick="switchApp('versicherung')" id="tab-versicherung" class="flex-1 md:flex-none px-4 md:px-8 py-3 md:py-4 rounded-full md:rounded-2xl text-xs md:text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300 flex items-center justify-center md:justify-start gap-4 w-full">
+                         <span class="hidden md:inline-block w-2 h-2 rounded-full bg-transparent border border-gray-400 dark:border-gray-600 shrink-0"></span> Versicherung
+                     </button>
+                     <button onclick="switchApp('treuhand')" id="tab-treuhand" class="flex-1 md:flex-none px-4 md:px-8 py-3 md:py-4 rounded-full md:rounded-2xl text-xs md:text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300 flex items-center justify-center md:justify-start gap-4 w-full">
+                         <span class="hidden md:inline-block w-2 h-2 rounded-full bg-transparent border border-gray-400 dark:border-gray-600 shrink-0"></span> Treuhand
+                     </button>
+                 </div>
+            </div>
+
+            <!-- iPhone Mockup Container -->
+            <div class="relative w-full max-w-[600px] h-[600px] flex justify-center items-center order-last z-20">
+            <!-- Ambient 3D Glow Orbs behind Phone -->
+            <div id="hero-glow-1" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-green/30 dark:bg-brand-green/40 rounded-full blur-[80px] z-0 animate-[breatheGlow_6s_ease-in-out_infinite] transition-colors duration-1000"></div>
+            <div id="hero-glow-2" class="absolute top-1/3 right-0 w-[200px] h-[200px] bg-brand-green/20 dark:bg-brand-green/20 rounded-full blur-[60px] z-0 animate-[breatheGlow_8s_ease-in-out_infinite_reverse] transition-colors duration-1000"></div>
+
+            <!-- MOCKUP 1: STEUER (Black iPhone 3D) -->
+            <div id="app-steuer" class="absolute inset-0 flex justify-center items-center transition-all duration-700 opacity-100 z-10 translate-y-0">
+                <div class="phone-3d relative w-[300px] h-[600px] bg-black rounded-[3rem] border-[8px] border-gray-900 dark:border-gray-800 shadow-[0_30px_60px_rgba(0,0,0,0.5),_0_0_40px_rgba(28,90,75,0.2)] overflow-hidden flex flex-col z-20">
+                    <!-- Edge Highlight -->
+                    <div class="absolute inset-0 rounded-[2.5rem] border border-white/20 dark:border-white/10 pointer-events-none z-40"></div>
+                    <!-- Dynamic Island -->
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-30 flex items-center justify-end px-3">
+                        <div class="w-3 h-3 rounded-full bg-gray-800 border border-gray-700"></div>
+                    </div>
+                    <!-- App UI -->
+                    <div class="w-full h-full bg-gray-50 dark:bg-[#0a0f0d] pt-14 pb-8 flex flex-col">
+                        <div class="px-5 py-3 flex justify-between items-center border-b border-gray-200 dark:border-white/5 relative z-30 bg-gray-50/90 dark:bg-[#0a0f0d]/90 backdrop-blur">
+                            <img src="avenzo-svg.svg" class="h-4 logo-main object-contain" alt="Avenzo">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden border-2 border-white dark:border-gray-700 shadow-sm">
+                                 <img src="denis-whitebg-removebg-preview.png" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="relative flex-grow overflow-hidden no-scrollbar">
+                            <div class="absolute inset-x-6 top-6 bottom-6 flex flex-col items-center justify-center text-center animate-[screenFade1_12s_infinite]">
+                                <div class="relative w-28 h-36 bg-white dark:bg-[#111] border border-gray-200 dark:border-white/10 rounded-lg shadow-2xl mb-6 flex flex-col p-3 overflow-hidden">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="w-4 h-4 bg-brand-green/20 rounded-sm"></div>
+                                        <div class="w-12 h-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    </div>
+                                    <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+                                    <div class="w-3/4 h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+                                    <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+                                    <div class="w-5/6 h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-auto"></div>
+                                    <div class="absolute left-0 right-0 h-[2px] bg-brand-green shadow-[0_0_12px_2px_rgba(28,90,75,0.8)] animate-[scanLaser_2s_ease-in-out_infinite] z-10 w-full transform -translate-y-1/2"></div>
+                                    <div class="absolute left-0 right-0 h-16 bg-gradient-to-b from-transparent to-brand-green/20 animate-[scanLaser_2s_ease-in-out_infinite] -translate-y-full z-0 w-full"></div>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Dokumentenscan</h3>
+                                <p class="text-sm text-gray-500 font-medium">Lohnausweis 2025 wird extrahiert...</p>
+                            </div>
+                            <div class="absolute inset-x-6 top-6 bottom-6 flex flex-col items-center justify-center text-center animate-[screenFade2_12s_infinite]" style="opacity: 0;">
+                                <div class="relative w-28 h-28 flex items-center justify-center mb-6">
+                                    <div class="absolute inset-0 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-full animate-[spinSlow_8s_linear_infinite]"></div>
+                                    <div class="absolute inset-2 border-2 border-dashed border-brand-green/40 rounded-full animate-[spinSlow_6s_linear_infinite_reverse]"></div>
+                                    <div class="w-16 h-16 bg-gradient-to-tr from-brand-green to-[#123d32] rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(28,90,75,0.6)] z-10">
+                                        <svg class="w-8 h-8 text-white filter drop-shadow-md animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                                    </div>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Avenzo AI Analyse</h3>
+                                <div class="space-y-3 w-full mt-4">
+                                    <div class="w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden relative">
+                                         <div class="absolute left-0 top-0 h-full bg-brand-green rounded-full animate-[slideRight_1.5s_infinite] w-[30%]"></div>
+                                    </div>
+                                    <div class="flex justify-between text-[0.65rem] font-bold uppercase tracking-widest text-gray-500">
+                                        <span>Steuerabzüge</span> <span class="text-brand-green">Kalkuliert</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute inset-x-6 top-6 bottom-6 flex flex-col gap-4 animate-[screenFade3_12s_infinite]" style="opacity: 0;">
+                                <div class="bg-gradient-to-br from-brand-green to-[#123d32] rounded-2xl p-5 shadow-xl relative overflow-hidden text-white">
+                                    <div class="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2"></div>
+                                    <svg class="absolute -right-6 -bottom-6 w-32 h-32 text-white opacity-5 transform -rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                                    <div class="text-[0.65rem] font-bold tracking-wider uppercase opacity-80 mb-1 relative z-10">Rückerstattung '25</div>
+                                    <div class="text-3xl font-extrabold mb-4 shrink-0 relative z-10">1.450 <span class="text-sm">CHF</span></div>
+                                    <div class="flex justify-between items-end mt-2 shrink-0 relative z-10">
+                                        <div class="text-[0.6rem] font-semibold bg-white/20 px-2 py-1 rounded backdrop-blur border border-white/20">Auszahlung in 3 Tagen</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOCKUP 2: VERSICHERUNG (Silver Flat iPhone) -->
+            <div id="app-versicherung" class="absolute inset-0 flex justify-center items-center transition-all duration-700 opacity-0 pointer-events-none z-0 translate-y-8">
+                <div class="relative w-[300px] h-[600px] bg-white dark:bg-gray-200 rounded-[3rem] border-[8px] border-gray-300 dark:border-gray-400 shadow-[0_30px_60px_rgba(59,130,246,0.3)] overflow-hidden flex flex-col z-20">
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-30 flex items-center justify-end px-3">
+                        <div class="w-3 h-3 rounded-full bg-gray-800 border border-gray-700"></div>
+                    </div>
+                    <div class="w-full h-full bg-blue-50 dark:bg-slate-900 flex flex-col relative pt-12">
+                        <div class="h-20 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-b-3xl px-5 pt-4 pb-3 flex justify-between items-center shadow-lg relative z-20">
+                            <div class="text-white font-black text-lg tracking-tight">Protect.</div>
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur text-white shadow-sm border border-white/20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                            </div>
+                        </div>
+                        <div class="flex-grow p-5 flex flex-col gap-4 overflow-hidden relative">
+                            <!-- Analyzing Card Loop -->
+                            <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-blue-100 dark:border-blue-900/50 animate-[floatSlow_4s_ease-in-out_infinite]">
+                                <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 pb-3 mb-3">
+                                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 flex items-center justify-center">
+                                        <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-[0.65rem] text-gray-500 font-bold uppercase tracking-widest">Markt Screening</div>
+                                        <div class="text-sm font-bold text-gray-900 dark:text-white">Autoversicherung</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center text-xs font-bold">
+                                    <span class="text-gray-400">Prämie: 940 CHF</span>
+                                    <span class="text-blue-600 animate-pulse">Suche Alternativen...</span>
+                                </div>
+                            </div>
+                            <!-- Success Result -->
+                            <div class="bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl p-5 shadow-lg text-white mt-auto mb-2 animate-[screenFade2_12s_infinite]">
+                                <div class="text-[0.65rem] font-bold tracking-wider uppercase opacity-80 mb-1">Neues Angebot (AXA)</div>
+                                <div class="text-3xl font-extrabold mb-2 shrink-0">680 <span class="text-sm font-medium">CHF/Jahr</span></div>
+                                <div class="flex items-center gap-1.5 mt-3 text-[0.65rem] font-bold bg-white/20 px-2.5 py-1.5 rounded-lg w-max backdrop-blur">
+                                    <svg class="w-3 h-3 text-[#4ade80]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 260 CHF Laufzeit-Ersparnis
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOCKUP 3: TREUHAND (Desktop macOS Window) -->
+            <div id="app-treuhand" class="absolute inset-0 flex justify-center items-center transition-all duration-700 opacity-0 pointer-events-none z-0 translate-y-8">
+                <div class="relative w-[340px] md:w-[600px] h-[400px] bg-white dark:bg-[#0f1211] rounded-xl border border-gray-200 dark:border-white/10 shadow-[0_40px_80px_rgba(234,179,8,0.2)] overflow-hidden flex flex-col z-20">
+                    <div class="h-10 bg-gray-100 dark:bg-[#1a1f1d] border-b border-gray-200 dark:border-white/5 flex items-center px-4 gap-2 shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                        <div class="mx-auto text-xs font-bold text-gray-500 tracking-wider">Business Portal</div>
+                    </div>
+                    <div class="flex-grow flex overflow-hidden">
+                        <div class="hidden md:flex w-[28%] border-r border-gray-100 dark:border-white/5 p-4 flex-col gap-3 bg-gray-50 dark:bg-transparent">
+                             <div class="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest mb-2">Workspace</div>
+                             <div class="bg-yellow-50 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 p-2 rounded-lg text-[0.7rem] font-bold flex items-center gap-2">
+                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg> Jahresabschluss
+                             </div>
+                             <div class="text-gray-600 dark:text-gray-400 p-2 rounded-lg text-[0.7rem] font-bold flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
+                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Dokumente
+                             </div>
+                             <div class="text-gray-600 dark:text-gray-400 p-2 rounded-lg text-[0.7rem] font-bold flex items-center gap-2 mt-auto hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
+                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> Support
+                             </div>
+                        </div>
+                        <div class="w-full md:w-[72%] p-6 flex flex-col gap-4 bg-white dark:bg-[#0a0f0d] relative overflow-hidden">
+                            <!-- Background Watermark -->
+                            <svg class="absolute right-0 bottom-0 w-64 h-64 text-yellow-500 opacity-5 transform translate-x-12 translate-y-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+
+                            <!-- Chat Bubbles -->
+                            <div class="flex gap-3 relative z-10 w-full mt-4">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 shrink-0 overflow-hidden border border-gray-100 dark:border-gray-700">
+                                    <img src="denis-whitebg-removebg-preview.png" class="w-full h-full object-cover">
+                                </div>
+                                <div class="bg-gray-100 dark:bg-white/5 p-3 rounded-2xl rounded-tl-sm text-xs text-gray-800 dark:text-gray-200 font-medium shadow-sm w-3/4 leading-relaxed">
+                                    Hallo! Ich habe die MWST-Abrechnung H1 2025 finalisiert. Die Zahlungsanweisung liegt im Portal bereit. Starten wir den Import?
+                                </div>
+                            </div>
+                            <div class="flex justify-end mt-4 relative z-10 w-full animate-[floatSlow_4s_ease-in-out_infinite]">
+                                 <div class="bg-yellow-500 text-white p-3 rounded-2xl rounded-tr-sm text-xs font-bold shadow-lg shadow-yellow-500/30 flex flex-col items-end gap-2 w-max">
+                                     <div>👍 Perfekt! Ich mache direkt den Sync.</div>
+                                 </div>
+                            </div>
+                            
+                            <!-- KPI File Block -->
+                            <div class="mt-auto border border-gray-200 dark:border-white/10 rounded-xl p-3 flex justify-between items-center bg-white/50 dark:bg-[#111]/50 backdrop-blur shadow-sm relative z-10 animate__animated animate__fadeInUp">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-yellow-50 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 flex items-center justify-center">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path></svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-900 dark:text-white">Q3 Umsatz</div>
+                                        <div class="text-[0.6rem] font-semibold text-gray-500">Geprüft & Freigegeben</div>
+                                    </div>
+                                </div>
+                                <div class="text-sm font-black text-gray-900 dark:text-white">45.200 <span class="text-[0.6rem] text-gray-500">CHF</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Badge Left -->
+            <div class="absolute -left-6 md:-left-20 top-24 md:top-32 glass-card bg-white/90 dark:bg-[#0a0f0d]/90 p-3 md:p-4 rounded-xl md:rounded-2xl border border-gray-200 dark:border-white/20 shadow-2xl z-30 flex items-center gap-3 animate-[floatSlow_6s_ease-in-out_infinite]">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-green rounded-full flex items-center justify-center text-white text-lg font-bold shrink-0">✓</div>
+                <div>
+                    <div class="text-[0.65rem] md:text-xs text-gray-600 dark:text-gray-400 font-bold uppercase tracking-wider">Steuer 2025</div>
+                    <div class="text-xs md:text-sm font-extrabold text-gray-900 dark:text-white">Frist gewahrt</div>
+                </div>
+            </div>
+            
+            <!-- Floating Badge Right -->
+            <div class="absolute -right-6 md:-right-20 bottom-32 md:bottom-20 glass-card bg-white/90 dark:bg-[#0a0f0d]/90 p-4 rounded-xl md:rounded-2xl border border-gray-200 dark:border-white/20 shadow-2xl z-30 flex flex-col gap-1 animate-[floatSlow_5s_ease-in-out_infinite_reverse]">
+                <div class="text-[0.65rem] md:text-xs text-gray-600 dark:text-gray-400 font-bold uppercase tracking-wider flex items-center gap-1">
+                    <svg class="w-3 h-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <span>Google Reviews</span>
+                </div>
+                <div class="text-sm md:text-lg font-extrabold text-gray-900 dark:text-white">4.9/5 <span class="text-[0.65rem] font-bold text-gray-500">Exzellent</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Logos Section -->
+    <section class="py-10 border-b border-gray-200 dark:border-white/5 relative z-10 bg-white/50 dark:bg-[#020302]/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-xs uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 font-bold mb-6">Technologie & Daten geschützt durch Standards von</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+                <span class="text-2xl font-black tracking-tighter text-gray-800 dark:text-white">PostFinance</span>
+                <span class="text-2xl font-bold tracking-tight text-gray-800 dark:text-white">★ UBS</span>
+                <span class="text-2xl font-extrabold italic text-gray-800 dark:text-white">ZKB</span>
+                <span class="text-2xl font-bold text-gray-800 dark:text-white">SwissLife</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 md:py-32 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 md:mb-24 reveal">
+                <div class="text-[0.75rem] uppercase tracking-[0.25em] font-bold text-brand-green dark:text-brand-green-light mb-4">Avenzo Premium</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">Ganzheitliche Kontrolle <br>über deine <span class="text-brand-green dark:text-brand-green-light">Zukunft.</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="glass-card rounded-[24px] p-8 md:p-10 border dark:border-white/10 border-gray-200 reveal bg-gray-50 dark:bg-[#0a0f0d]" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 rounded-2xl bg-brand-green/10 text-brand-green dark:bg-brand-green/20 dark:text-brand-green-light flex items-center justify-center mb-6 icon-bounce border border-brand-green/20">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Steuererklärung</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed font-medium">Stressfrei und maximal optimiert. Wir kennen jeden legalen Trick, um das Maximum für dich herauszuholen. Komplett digital ohne Papierkrieg.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> 100% digitaler Upload</li>
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Fristverlängerung kostenlos</li>
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Höchste Rückzahlung</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card rounded-[24px] p-8 md:p-10 border dark:border-white/10 border-gray-200 reveal bg-gray-50 dark:bg-[#0a0f0d]" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 rounded-2xl bg-brand-green/10 text-brand-green dark:bg-brand-green/20 dark:text-brand-green-light flex items-center justify-center mb-6 icon-bounce border border-brand-green/20">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Versicherungen</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed font-medium">Krankenkasse, Auto, Haushalt. Wir durchleuchten dein Portfolio, reduzieren Prämien und optimieren den steuerlichen Abzug. Automatisch.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Unabhängige Expertenprüfung</li>
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Steuerliche Optimierung</li>
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Automatische Wechselservices</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card rounded-[24px] p-8 md:p-10 border dark:border-white/10 border-gray-200 reveal bg-gray-50 dark:bg-[#0a0f0d]" style="transition-delay: 0.3s;">
+                    <div class="w-16 h-16 rounded-2xl bg-brand-green/10 text-brand-green dark:bg-brand-green/20 dark:text-brand-green-light flex items-center justify-center mb-6 icon-bounce border border-brand-green/20">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Treuhand</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed font-medium">Exklusiv für Selbstständige und KMU. Buchhaltung, Lohnwesen und Abschlussgestaltung aus einer Hand – via App übersichtlich gesteuert.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Moderne digitale Buchhaltung</li>
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> MWST- & Lohnadministration</li>
+                        <li class="flex items-center text-sm font-semibold text-gray-700 dark:text-gray-300"><span class="text-brand-green dark:text-brand-green-light mr-3 text-lg">✓</span> Strukturierte Gründungsberatung</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App / Feature Split Section -->
+    <section id="features" class="py-24 relative z-10 overflow-hidden bg-gray-50/50 dark:bg-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Text Left -->
+                <div class="w-full lg:w-1/2 reveal">
+                    <div class="text-[0.75rem] uppercase tracking-[0.25em] font-bold text-brand-green dark:text-brand-green-light mb-4">Avenzo Plattform</div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">Transparenz in <br>absoluter <span class="text-brand-green dark:text-brand-green-light">Echtzeit.</span></h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                        Verfolge den Bearbeitungsstatus deiner Dokumente sofort. Unsere intelligente Dashboard-Architektur gibt dir 24/7 Einblick in potenzielle Rückzahlungen, offene To-Dos und direkte Chats mit deinem Finanzexperten.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green-light flex items-center justify-center font-bold">1</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Upload & KI-Scan</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1 font-medium">Fotografiere Dokumente; wir lesen sie automatisch ein.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green-light flex items-center justify-center font-bold">2</div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900 dark:text-white">Experten-Review</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1 font-medium">Unsere Schweizer Spezialisten optimieren live im Hintergrund.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mockup Right -->
+                <div class="w-full lg:w-1/2 reveal perspective-1000">
+                    <div class="relative w-full aspect-square md:aspect-[4/3] transform rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-y-0 hover:rotate-x-0 transition-transform duration-700 ease-out">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-green to-blue-500 opacity-20 blur-3xl rounded-full"></div>
+                        <div class="glass-card absolute inset-4 border border-gray-200 dark:border-white/10 rounded-3xl bg-white dark:bg-[#0a0f0d] shadow-2xl overflow-hidden flex flex-col">
+                            <div class="h-12 border-b border-gray-100 dark:border-white/5 flex items-center px-6">
+                                <span class="font-bold text-gray-900 dark:text-white">Avenzo Mobile</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col gap-4 bg-gray-50/50 dark:bg-transparent">
+                                <div class="w-full h-1/2 rounded-2xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 p-4 flex flex-col justify-end relative overflow-hidden">
+                                     <div class="absolute inset-0 opacity-10 dark:opacity-20" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #ccc 10px, #ccc 20px);"></div>
+                                    <div class="h-32 w-full flex items-end gap-2 z-10">
+                                        <!-- fake bar chart -->
+                                        <div class="w-full bg-gray-200 dark:bg-white/10 rounded-t-sm h-1/4"></div>
+                                        <div class="w-full bg-gray-200 dark:bg-white/10 rounded-t-sm h-2/4"></div>
+                                        <div class="w-full bg-gray-200 dark:bg-white/10 rounded-t-sm h-1/3"></div>
+                                        <div class="w-full bg-brand-green rounded-t-sm h-[80%] relative shadow-[0_0_15px_rgba(28,90,75,0.5)]"></div>
+                                        <div class="w-full bg-gray-200 dark:bg-white/10 rounded-t-sm h-1/2"></div>
+                                    </div>
+                                    <div class="mt-4 z-10 font-bold text-gray-900 dark:text-white">Historische Steuer-Einsparungen</div>
+                                </div>
+                                <div class="w-full h-1/2 rounded-2xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 p-4 flex items-center gap-4">
+                                     <div class="w-12 h-12 rounded-full border-[3px] border-brand-green flex items-center justify-center p-1">
+                                         <img src="denis-whitebg-removebg-preview.png" class="w-full h-full rounded-full object-cover bg-gray-200 dark:bg-gray-800" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NjYyI+PHBhdGggZD0iTTEyIDJDMiAyIDIuOTUgMTQgMTQgMTVzLTEyIDEzLTEyIDEzem0tMSAxNWwtNS01IDEuNDEtMS40MUwxMSAxNC4xN2w3LjU5LTcuNTlMMjAgOGwtOSA5eiIvPjwvc3ZnPg=='">
+                                     </div>
+                                     <div>
+                                         <div class="text-sm font-bold text-gray-900 dark:text-white">Denis S. (Dein Berater)</div>
+                                         <div class="text-xs text-brand-green font-semibold">"Die Frist wurde erfolgreich gewahrt."</div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive ROI Calculator -->
+    <section id="calculator" class="py-24 relative z-10 overflow-hidden bg-white dark:bg-[#020302]">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <div class="text-center mb-12">
+                <div class="text-[0.75rem] uppercase tracking-[0.25em] font-bold text-brand-green dark:text-brand-green-light mb-4">Live Rechner</div>
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">Berechne dein <br>Sparpotenzial.</h2>
+            </div>
+            
+            <div class="glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/80 rounded-[32px] p-8 md:p-12 border border-gray-200 dark:border-white/10 shadow-2xl backdrop-blur-xl">
+                <div class="mb-10 text-center">
+                    <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-6">Dein Bruttojahreseinkommen</label>
+                    <div class="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-8" id="incomeDisplay">80.000 CHF</div>
+                    <input type="range" id="incomeSlider" min="40000" max="250000" step="5000" value="80000" 
+                           class="w-full h-3 bg-gray-200 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-brand-green">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-gray-200 dark:border-white/10">
+                    <div class="text-center mb-6 md:mb-0">
+                        <div class="text-xs font-bold text-gray-500 uppercase mb-2">Steuerersparnis</div>
+                        <div class="text-2xl font-extrabold text-brand-green dark:text-brand-green-light" id="taxSavings">1.200 CHF</div>
+                    </div>
+                    <div class="text-center mb-6 md:mb-0">
+                        <div class="text-xs font-bold text-gray-500 uppercase mb-2">Versicherungs-Optimierung</div>
+                        <div class="text-2xl font-extrabold text-brand-green dark:text-brand-green-light" id="insSavings">530 CHF</div>
+                    </div>
+                    <div class="text-center md:border-l border-gray-200 dark:border-white/10 md:pl-6">
+                        <div class="text-xs font-bold text-gray-500 uppercase mb-2">Total ROI pro Jahr</div>
+                        <div class="text-3xl font-black text-gray-900 dark:text-white" id="totalSavings">1.730 CHF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Glowing Timeline (Ablauf) -->
+    <section id="how-it-works" class="py-24 relative z-10 bg-gray-50 dark:bg-brand-dark">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <div class="text-[0.75rem] uppercase tracking-[0.25em] font-bold text-brand-green dark:text-brand-green-light mb-4">Der Weg</div>
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">In 3 simplen Schritten <br>zum Maximum.</h2>
+            </div>
+            
+            <div class="relative wrap overflow-hidden p-4 md:p-10 h-full">
+                <!-- Center Line -->
+                <div class="absolute border-opacity-20 border-gray-300 dark:border-white/10 h-full border-2 left-8 md:left-1/2 md:-translate-x-1/2"></div>
+                
+                <!-- Step 1 -->
+                <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center w-full reveal">
+                    <div class="order-1 md:w-5/12 ml-16 md:ml-0 md:text-right">
+                        <h4 class="mb-3 font-bold text-2xl text-gray-900 dark:text-white">1. App Load & Connect</h4>
+                        <p class="text-gray-600 dark:text-gray-400 font-medium text-sm leading-relaxed">Lade die Avenzo App, scanne deinen Lohnausweis oder verbinde deine Bank via OpenBanking sicher und verschlüsselt in unter 3 Minuten.</p>
+                    </div>
+                    <div class="z-20 absolute left-4 md:static md:left-auto flex items-center order-1 bg-white dark:bg-[#050706] shadow-[0_0_20px_rgba(28,90,75,0.3)] border-4 border-brand-green w-10 h-10 md:w-14 md:h-14 rounded-full">
+                        <h1 class="mx-auto font-black text-lg text-brand-green dark:text-brand-green-light">1</h1>
+                    </div>
+                    <div class="order-1 md:w-5/12"></div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center w-full reveal">
+                    <div class="order-1 md:w-5/12"></div>
+                    <div class="z-20 absolute left-4 md:static md:left-auto flex items-center order-1 bg-brand-green shadow-[0_0_30px_rgba(28,90,75,0.6)] border-4 border-white dark:border-[#111] w-10 h-10 md:w-14 md:h-14 rounded-full transform scale-110">
+                        <h1 class="mx-auto font-black text-lg text-white">2</h1>
+                    </div>
+                    <div class="order-1 md:w-5/12 ml-16 md:ml-0 md:pl-8">
+                        <h4 class="mb-3 font-bold text-2xl text-gray-900 dark:text-white">2. KI Analyse</h4>
+                        <p class="text-gray-600 dark:text-gray-400 font-medium text-sm leading-relaxed">Unsere KI kombiniert mit echten Schweizer Steuerexperten durchsucht hunderte Abzugsmöglichkeiten und optimiert live deine Policen.</p>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center w-full reveal">
+                    <div class="order-1 md:w-5/12 ml-16 md:ml-0 md:text-right">
+                        <h4 class="mb-3 font-bold text-2xl text-brand-green dark:text-brand-green-light">3. Auszahlung & Profit</h4>
+                        <p class="text-gray-600 dark:text-gray-400 font-medium text-sm leading-relaxed">Wir reichen alles fristgerecht beim Steueramt ein, kündigen teure Policen und sichern dir Jahr für Jahr dein Geld zurück.</p>
+                    </div>
+                    <div class="z-20 absolute left-4 md:static md:left-auto flex items-center order-1 bg-white dark:bg-[#050706] shadow-[0_0_20px_rgba(28,90,75,0.3)] border-4 border-brand-green w-10 h-10 md:w-14 md:h-14 rounded-full">
+                        <h1 class="mx-auto font-black text-lg text-brand-green dark:text-brand-green-light">3</h1>
+                    </div>
+                    <div class="order-1 md:w-5/12"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infinite Social Marquee -->
+    <section id="testimonials" class="py-24 border-t border-gray-200 dark:border-white/5 relative z-10 text-center overflow-hidden bg-white dark:bg-[#020302]">
+        <div class="text-[0.75rem] uppercase tracking-[0.25em] font-bold text-brand-green dark:text-brand-green-light mb-12 reveal">Beliebt bei 10.000+ Schweizern</div>
+        
+        <div class="relative w-full flex overflow-x-hidden">
+            <!-- Repeated groups of 4 cards to ensure perfect infinite seamless loop via CSS -->
+            <div class="animate-marquee whitespace-nowrap flex items-center gap-6 py-4">
+                <!-- Block A -->
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Endlich kein Papierkram mehr. Der Support ist extrem schnell und professionell."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-green/20 flex items-center text-xs font-bold text-brand-green justify-center">MT</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Michael T.</div>
+                    </div>
+                </div>
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Ich habe 1.200 CHF mehr zurückbekommen als die Jahre zuvor beim Treuhänder."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center text-xs font-bold text-blue-500 justify-center">SL</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Sarah L.</div>
+                    </div>
+                </div>
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Die App ist unfassbar clean. Lade meine Belege einfach übers Jahr verteilt hoch."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center text-xs font-bold text-purple-500 justify-center">DK</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Dennis K.</div>
+                    </div>
+                </div>
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Hervorragende Beratung. Überhaupt nicht aufdringlich, sehr transparent."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center text-xs font-bold text-orange-500 justify-center">AR</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Anna R.</div>
+                    </div>
+                </div>
+                <!-- Block B (Clone of A to enable continuous loop without jumping) -->
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Endlich kein Papierkram mehr. Der Support ist extrem schnell und professionell."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-green/20 flex items-center text-xs font-bold text-brand-green justify-center">MT</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Michael T.</div>
+                    </div>
+                </div>
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Ich habe 1.200 CHF mehr zurückbekommen als die Jahre zuvor beim Treuhänder."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center text-xs font-bold text-blue-500 justify-center">SL</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Sarah L.</div>
+                    </div>
+                </div>
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Die App ist unfassbar clean. Lade meine Belege einfach übers Jahr verteilt hoch."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center text-xs font-bold text-purple-500 justify-center">DK</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Dennis K.</div>
+                    </div>
+                </div>
+                <div class="inline-block w-80 whitespace-normal text-left glass-card bg-gray-50/80 dark:bg-[#0a0f0d]/90 p-6 rounded-2xl border border-gray-200 dark:border-white/10">
+                    <div class="flex text-yellow-500 text-sm mb-3">★★★★★</div>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mb-4 text-sm">"Hervorragende Beratung. Überhaupt nicht aufdringlich, sehr transparent."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center text-xs font-bold text-orange-500 justify-center">AR</div>
+                        <div class="text-xs font-bold text-gray-900 dark:text-white">Anna R.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fading Edges overlay -->
+        <div class="absolute top-0 right-0 w-16 md:w-32 h-full bg-gradient-to-l from-white dark:from-[#020302] to-transparent pointer-events-none z-10"></div>
+        <div class="absolute top-0 left-0 w-16 md:w-32 h-full bg-gradient-to-r from-white dark:from-[#020302] to-transparent pointer-events-none z-10"></div>
+    </section>
+
+    <!-- Final Huge CTA -->
+    <section class="py-32 relative z-10 px-6">
+        <div class="max-w-5xl mx-auto bg-gradient-to-br from-brand-green/10 to-transparent dark:from-brand-green-light/10 border border-brand-green/20 dark:border-white/10 rounded-[40px] p-12 md:p-20 text-center relative overflow-hidden reveal">
+            <!-- decorative circles -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-green rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] opacity-20 transform -translate-x-1/2 translate-y-1/2"></div>
+            
+            <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 relative z-10 tracking-tight">Bereit für die Zukunft?</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto font-medium relative z-10">Schließe dich hunderten zufriedenen Kunden an, die ihre Finanzen bereits automatisiert und optimiert haben.</p>
+            <a href="#contact" class="btn-primary relative z-10 bg-brand-green text-white dark:bg-white dark:text-brand-dark px-10 py-5 rounded-full font-bold text-lg shadow-2xl hover:scale-105 inline-block">
+                Konto erstellen — 100% Kostenlos
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-[#020302] pt-20 pb-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Brand Col -->
+                <div class="md:col-span-1">
+                    <img src="avenzo-svg.svg" alt="Avenzo Logo" class="logo-main h-6 object-contain mb-6">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
+                        Die smarte Finanzlösung für die Schweiz. Steuer, Versicherung und Treuhand — vereint auf einer Plattform.
+                    </p>
+                </div>
+                <!-- Links 1 -->
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-6 tracking-wide">Plattform</h4>
+                    <ul class="space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">App Download</a></li>
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Preise</a></li>
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Sicherheit</a></li>
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Updates</a></li>
+                    </ul>
+                </div>
+                <!-- Links 2 -->
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-6 tracking-wide">Unternehmen</h4>
+                    <ul class="space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Über Avenzo</a></li>
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Karriere</a></li>
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Kontakt</a></li>
+                        <li><a href="#" class="hover:text-brand-green dark:hover:text-white transition">Presse</a></li>
+                    </ul>
+                </div>
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-6 tracking-wide">Bleib informiert</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 font-medium">Finanz-Tipps direkt in deinen Posteingang.</p>
+                    <form class="flex" onsubmit="event.preventDefault(); alert('Angemeldet!');">
+                        <input type="email" placeholder="E-Mail Adresse" class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-l-lg px-4 py-2 text-sm text-gray-900 dark:text-white outline-none focus:border-brand-green transition" required>
+                        <button type="submit" class="bg-brand-green text-white px-4 py-2 rounded-r-lg font-bold text-sm hover:bg-[#1a4b40] transition">➔</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between">
+                <div class="text-sm text-gray-500 dark:text-gray-500 font-medium mb-4 md:mb-0">
+                    &copy; 2026 Avenzo GmbH. Alle Rechte vorbehalten.
+                </div>
+                <div class="flex space-x-6 text-sm font-medium text-gray-500 dark:text-gray-500">
+                    <a href="#" class="hover:text-gray-900 dark:hover:text-white transition">Datenschutz</a>
+                    <a href="#" class="hover:text-gray-900 dark:hover:text-white transition">AGB</a>
+                    <a href="#" class="hover:text-gray-900 dark:hover:text-white transition">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Scroll Reveal Animation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+                
+                reveals.forEach(reveal => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // init trigger
+        });
+
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        themeBtn.addEventListener('click', () => html.classList.toggle('dark'));
+
+        // Tab Switching Logic
+        window.switchApp = function(tab) {
+            const btnSteuer = document.getElementById('tab-steuer');
+            const btnVers = document.getElementById('tab-versicherung');
+            const btnTreu = document.getElementById('tab-treuhand');
+            
+            // Base interactive classes
+            const baseInactive = 'px-5 py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300';
+            
+            btnSteuer.className = baseInactive;
+            btnVers.className = baseInactive;
+            btnTreu.className = baseInactive;
+
+            const appSteuer = document.getElementById('app-steuer');
+            const appVers = document.getElementById('app-versicherung');
+            const appTreu = document.getElementById('app-treuhand');
+
+            appSteuer.className = 'absolute inset-0 transition-opacity duration-500 opacity-0 pointer-events-none z-0 w-full h-full';
+            appVers.className = 'absolute inset-0 transition-opacity duration-500 opacity-0 pointer-events-none z-0 w-full h-full';
+            appTreu.className = 'absolute inset-0 transition-opacity duration-500 opacity-0 pointer-events-none z-0 w-full h-full';
+
+            const glow1 = document.getElementById('hero-glow-1');
+            const glow2 = document.getElementById('hero-glow-2');
+
+            if (tab === 'steuer') {
+                btnSteuer.className = 'flex-1 md:flex-none px-4 md:px-8 py-3 md:py-4 rounded-full md:rounded-2xl text-xs md:text-sm font-bold bg-brand-green text-white shadow-md transition-all duration-300 flex items-center justify-center md:justify-start gap-4 w-full';
+                btnSteuer.innerHTML = activeDot + ' Steuer';
+                appSteuer.className = 'absolute inset-0 transition-opacity duration-500 opacity-100 z-10 w-full h-full';
+                glow1.className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-green/30 dark:bg-brand-green/40 rounded-full blur-[80px] z-0 animate-[breatheGlow_6s_ease-in-out_infinite] transition-colors duration-1000";
+                glow2.className = "absolute top-1/3 right-0 w-[200px] h-[200px] bg-brand-green/20 dark:bg-brand-green/20 rounded-full blur-[60px] z-0 animate-[breatheGlow_8s_ease-in-out_infinite_reverse] transition-colors duration-1000";
+            } else if (tab === 'versicherung') {
+                btnVers.className = 'flex-1 md:flex-none px-4 md:px-8 py-3 md:py-4 rounded-full md:rounded-2xl text-xs md:text-sm font-bold bg-blue-500 text-white shadow-md transition-all duration-300 flex items-center justify-center md:justify-start gap-4 w-full';
+                btnVers.innerHTML = activeDot + ' Versicherung';
+                appVers.className = 'absolute inset-0 transition-opacity duration-500 opacity-100 z-10 w-full h-full';
+                glow1.className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-blue-500/30 dark:bg-blue-500/40 rounded-full blur-[80px] z-0 animate-[breatheGlow_6s_ease-in-out_infinite] transition-colors duration-1000";
+                glow2.className = "absolute top-1/3 right-0 w-[200px] h-[200px] bg-indigo-500/20 dark:bg-indigo-500/30 rounded-full blur-[60px] z-0 animate-[breatheGlow_8s_ease-in-out_infinite_reverse] transition-colors duration-1000";
+            } else if (tab === 'treuhand') {
+                btnTreu.className = 'flex-1 md:flex-none px-4 md:px-8 py-3 md:py-4 rounded-full md:rounded-2xl text-xs md:text-sm font-bold bg-yellow-500 text-white shadow-md transition-all duration-300 flex items-center justify-center md:justify-start gap-4 w-full';
+                btnTreu.innerHTML = activeDot + ' Treuhand';
+                appTreu.className = 'absolute inset-0 transition-opacity duration-500 opacity-100 z-10 w-full h-full';
+                glow1.className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-yellow-500/30 dark:bg-yellow-500/40 rounded-full blur-[80px] z-0 animate-[breatheGlow_6s_ease-in-out_infinite] transition-colors duration-1000";
+                glow2.className = "absolute top-1/3 right-0 w-[200px] h-[200px] bg-orange-500/20 dark:bg-orange-500/30 rounded-full blur-[60px] z-0 animate-[breatheGlow_8s_ease-in-out_infinite_reverse] transition-colors duration-1000";
+            }
+        }
+
+        // Calculator Logic
+        const slider = document.getElementById('incomeSlider');
+        const incomeDisplay = document.getElementById('incomeDisplay');
+        const taxSavings = document.getElementById('taxSavings');
+        const insSavings = document.getElementById('insSavings');
+        const totalSavings = document.getElementById('totalSavings');
+
+        if(slider) {
+            slider.addEventListener('input', (e) => {
+                const income = parseInt(e.target.value);
+                incomeDisplay.innerText = income.toLocaleString('de-CH') + ' CHF';
+                
+                // Calculation Simulation Formulas
+                const tSav = Math.round(income * 0.015);
+                const iSav = income > 40000 ? 530 + Math.round((income - 80000) * 0.002) : 530;
+                const total = tSav + iSav;
+                
+                taxSavings.innerText = tSav.toLocaleString('de-CH') + ' CHF';
+                insSavings.innerText = iSav.toLocaleString('de-CH') + ' CHF';
+                totalSavings.innerText = total.toLocaleString('de-CH') + ' CHF';
+            });
+        }
+    </script>
+</body>
+</html>
