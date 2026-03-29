@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import lohnausweis from "../../assets/lohnsteuerausweis.png";
 
 type TabId = "steuer" | "versicherung" | "treuhand";
@@ -8,9 +8,13 @@ interface Tab {
   pill: string;
   appName: string;
   heading: React.ReactNode;
+  mobileHeading: string;
+  mobileTagline: string;
   description: string;
   available: boolean;
   color: string;
+  bgFrom: string;
+  bgTo: string;
 }
 
 const tabs: Tab[] = [
@@ -25,10 +29,14 @@ const tabs: Tab[] = [
         <span style={{ color: "var(--color-accent-dark)" }}>Null Aufwand.</span>
       </>
     ),
+    mobileHeading: "Maximale Steuerabzüge. Null Aufwand.",
+    mobileTagline: "KI findet versteckte Abzüge in Sekunden.",
     description:
       "Lade deine Dokumente hoch — unsere KI findet in Sekunden versteckte Abzüge, die du sonst verpasst hättest.",
     available: true,
     color: "var(--color-accent-dark)",
+    bgFrom: "from-[#f0fce4]",
+    bgTo: "to-[#e8f9d4]",
   },
   {
     id: "versicherung",
@@ -41,10 +49,14 @@ const tabs: Tab[] = [
         <span className="text-app-insurance">Jetzt Klarheit.</span>
       </>
     ),
+    mobileHeading: "Über- oder unterversichert? Jetzt Klarheit.",
+    mobileTagline: "Portfolio-Check deckt Lücken auf, senkt Prämien.",
     description:
       "Unser Portfolio-Check analysiert deine Policen, deckt Lücken auf und senkt deine Prämien — transparent und unabhängig.",
     available: false,
     color: "var(--color-app-insurance)",
+    bgFrom: "from-[#eef1ff]",
+    bgTo: "to-[#e4e9ff]",
   },
   {
     id: "treuhand",
@@ -57,16 +69,22 @@ const tabs: Tab[] = [
         <span className="text-app-treuhand">für dich arbeitet.</span>
       </>
     ),
+    mobileHeading: "Buchhaltung, die für dich arbeitet.",
+    mobileTagline: "Vom Beleg bis zur Bilanz — alles automatisiert.",
     description:
       "Vom Beleg bis zur Bilanz — alles automatisiert. Echtzeit-Dashboard und persönlicher Experte für KMU.",
     available: false,
     color: "var(--color-app-treuhand)",
+    bgFrom: "from-[#f3eeff]",
+    bgTo: "to-[#ece4ff]",
   },
 ];
 
 export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
   const [activeTab, setActiveTab] = useState<TabId>("steuer");
   const current = tabs.find((t) => t.id === activeTab)!;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [mobileActiveIdx, setMobileActiveIdx] = useState(0);
 
   const goNext = () => {
     const idx = tabs.findIndex((t) => t.id === activeTab);
@@ -78,21 +96,121 @@ export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
     setActiveTab(tabs[(idx - 1 + tabs.length) % tabs.length].id);
   };
 
+  // Sync mobile scroll position to active dot
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.offsetWidth * 0.85;
+    const idx = Math.round(el.scrollLeft / cardWidth);
+    setMobileActiveIdx(Math.min(idx, tabs.length - 1));
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  // Calculate phone scale to fill the mockup container
+  useEffect(() => {
+    const update = () => {
+      document.documentElement.style.setProperty(
+        "--phone-scale",
+        String(Math.min((window.innerWidth * 0.85 - 32) / 285, (window.innerHeight * 0.65) / 600, 0.72))
+      );
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   return (
-    <section className="pt-32 pb-10 px-4 max-w-7xl mx-auto flex flex-col items-center text-center">
+    <section className="pt-20 sm:pt-32 pb-6 sm:pb-10 sm:px-4 max-w-7xl mx-auto flex flex-col items-center text-center">
       {/* H1 */}
-      <div className="max-w-4xl mx-auto mb-16 mt-4">
-        <h1 className="text-4xl md:text-[5rem] font-medium tracking-tight text-gray-900 mb-6 leading-[1.05]">
-          Finanzen neu gedacht — <br />für eine bessere Zukunft.
+      <div className="max-w-4xl mx-auto mb-6 sm:mb-16 mt-2 sm:mt-4 px-5 sm:px-0">
+        <h1 className="text-[2.25rem] sm:text-4xl md:text-[5rem] font-medium tracking-tight text-gray-900 mb-3 sm:mb-6 leading-[1.1] sm:leading-[1.05]">
+          Finanzen neu gedacht — <br className="hidden sm:block" />für eine bessere Zukunft.
         </h1>
-        <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
-          Drei spezialisierte Apps für Steuern, Versicherungen und Treuhand —
-          jede entwickelt, um dir Zeit und Geld zu sparen.
+        <p className="text-[13px] sm:text-base md:text-lg text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+          Steuern, Versicherungen und Buchhaltung — in drei Apps, die dir
+          sofort mehr Geld zurückholen und Stunden an Aufwand ersparen.
         </p>
       </div>
 
-      {/* Interactive Card */}
-      <div className="w-full max-w-6xl mx-auto">
+      {/* ═══════════════════════════════════════════
+          MOBILE: Horizontal snap-scroll cards
+          ═══════════════════════════════════════════ */}
+      <div className="sm:hidden w-full">
+        {/* Scrollable card track */}
+        <div
+          ref={scrollRef}
+          className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pl-4 pr-4 pb-4"
+          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        >
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              className="snap-center shrink-0 w-[85%] rounded-[1.25rem] overflow-hidden flex flex-col shadow-[0_4px_24px_-2px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.04)]"
+            >
+              {/* Mockup showcase — clipped tight to phone */}
+              <div className={`relative bg-gradient-to-b ${tab.bgFrom} ${tab.bgTo} flex justify-center items-start overflow-hidden`} style={{ height: `calc(500px * var(--phone-scale, 0.58) + 8px)` }}>
+                <div className="flex justify-center pt-2" style={{ transform: "scale(var(--phone-scale, 0.58))", transformOrigin: "top center" }}>
+                  {tab.id === "steuer" && <PhoneSteuer theme={theme} />}
+                  {tab.id === "versicherung" && <PhoneVersicherung theme={theme} />}
+                  {tab.id === "treuhand" && <BrowserTreuhand />}
+                </div>
+
+                {/* Coming soon overlay */}
+                {!tab.available && (
+                  <div className="absolute top-3.5 left-3.5 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm text-[10px] font-bold text-gray-500 shadow-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-status-pending animate-pulse" />
+                    Coming soon
+                  </div>
+                )}
+              </div>
+
+              {/* Bottom strip */}
+              <div className="bg-white px-5 pt-4 pb-5">
+                <h3 className="text-[15px] font-semibold tracking-tight text-gray-900 leading-snug">
+                  {tab.mobileHeading}
+                </h3>
+                <p className="text-[12.5px] text-gray-500 mt-1 mb-4 leading-relaxed">
+                  {tab.mobileTagline}
+                </p>
+
+                <a href="#" className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-[13px] active:scale-[0.98] transition-transform ${
+                  tab.available
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-900"
+                }`}>
+                  {tab.available ? "Jetzt starten" : "Mehr erfahren"}
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-1 mb-1">
+          {tabs.map((_, i) => (
+            <div
+              key={i}
+              className={`h-[5px] rounded-full transition-all duration-300 ${
+                i === mobileActiveIdx ? "w-6 bg-dark" : "w-[5px] bg-gray-200"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════
+          DESKTOP: Original tabbed card (unchanged)
+          ═══════════════════════════════════════════ */}
+      <div className="hidden sm:block w-full max-w-6xl mx-auto px-3 sm:px-0">
         <div className="bg-surface rounded-[2.5rem] relative">
           {/* Arrows on card edges */}
           <button
@@ -121,7 +239,7 @@ export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`relative px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold cursor-pointer ${
+                    className={`relative px-6 py-2.5 rounded-full text-sm font-semibold cursor-pointer ${
                       isActive ? "text-white" : "text-gray-400 hover:text-gray-600"
                     }`}
                   >
@@ -135,26 +253,20 @@ export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
             </div>
           </div>
 
-          {/* Content — fixed height so container doesn't shift between tabs */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-2 items-center p-6 sm:p-8 lg:p-10 xl:p-12 min-h-[580px] lg:min-h-[620px]">
+          {/* Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-2 items-center p-8 lg:p-10 xl:p-12 lg:min-h-[620px]">
             {/* Left: Info */}
             <div key={activeTab} className="text-left pl-2 lg:pl-6 min-h-[360px] flex flex-col justify-center tab-fade-in">
-              {/* App name */}
               <div className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-5">
                 {current.appName}
               </div>
-
-              {/* Heading */}
-              <h2 className="text-3xl sm:text-4xl lg:text-[2.8rem] xl:text-5xl font-medium tracking-tight text-gray-900 leading-[1.1] mb-5">
+              <h2 className="text-4xl lg:text-[2.8rem] xl:text-5xl font-medium tracking-tight text-gray-900 leading-[1.1] mb-5">
                 {current.heading}
               </h2>
-
-              {/* Description */}
               <p className="text-base lg:text-lg text-gray-500 font-medium leading-relaxed max-w-lg mb-8">
                 {current.description}
               </p>
 
-              {/* CTAs */}
               {current.available ? (
                 <div className="flex flex-wrap items-center gap-3">
                   <a href="#" className="inline-flex items-center gap-2.5 bg-dark text-white pl-4 pr-5 py-2.5 rounded-xl hover:bg-gray-800 transition-colors duration-200 cursor-pointer shadow-sm">
@@ -195,22 +307,6 @@ export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
                       </svg>
                     </a>
                   </div>
-                  {/* Waitlist CTA */}
-                  <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-4 max-w-md">
-                    <p className="text-sm font-semibold text-gray-700 mb-3">
-                      Benachrichtigt werden, sobald verfügbar?
-                    </p>
-                    <div className="flex gap-2">
-                      <input
-                        type="email"
-                        placeholder="deine@email.ch"
-                        className="flex-1 px-4 py-2.5 rounded-xl bg-surface border border-gray-100 text-sm font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-gray-300 focus:ring-2 focus:ring-accent/20"
-                      />
-                      <button className="bg-accent text-accent-text px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-accent-hover transition-colors shadow-sm whitespace-nowrap">
-                        Anmelden
-                      </button>
-                    </div>
-                  </div>
                 </div>
               )}
             </div>
@@ -224,19 +320,10 @@ export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
           </div>
 
           {/* Detail link — card footer */}
-          <div className="mx-8 sm:mx-10 lg:mx-12 border-t border-gray-200/60">
-            <a
-              href="#services"
-              className="group flex items-center justify-center gap-2 py-5 text-[13px] font-semibold text-gray-400 hover:text-gray-900 transition-colors duration-300 cursor-pointer"
-            >
+          <div className="mx-10 lg:mx-12 border-t border-gray-200/60">
+            <a href="#services" className="group flex items-center justify-center gap-2 py-5 text-[13px] font-semibold text-gray-400 hover:text-gray-900 transition-colors duration-300 cursor-pointer">
               Alle Details anzeigen
-              <svg
-                className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
+              <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </a>
@@ -250,17 +337,19 @@ export function PaylineHero({ theme }: { theme: "neon" | "original" }) {
 /* ─── Phone: Steuer ─── */
 function PhoneSteuer({ }: { theme: string }) {
   return (
-    <div className="relative w-[270px] sm:w-[285px] h-[555px] sm:h-[585px] bg-device-body rounded-[2.8rem] border-[6px] border-device-border shadow-device overflow-hidden">
+    <div className="relative w-[220px] sm:w-[270px] md:w-[285px] h-[450px] sm:h-[555px] md:h-[585px] bg-device-body rounded-[2rem] sm:rounded-[2.8rem] border-[5px] sm:border-[6px] border-device-border shadow-device overflow-hidden">
       <DynamicIsland />
       <div className="w-full h-full bg-white pt-12 flex flex-col">
         {/* App header */}
         <div className="px-5 pt-2.5 pb-2 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <img src="/avenzo_icon.svg" className="h-[14px] w-auto object-contain" style={{ filter: "brightness(0)" }} alt="Avenzo" />
+            <img src="/avenzo-website/avenzo_icon.svg" className="h-[16px] w-auto object-contain" style={{ filter: "brightness(0)" }} alt="Avenzo" />
             <span className="text-[10px] font-bold tracking-[0.08em] text-gray-900">avenzo</span>
+            <div className="w-px h-3 bg-gray-200" />
+            <span className="text-[9px] font-semibold tracking-wide" style={{ color: "var(--color-accent-dark)" }}>Steuererklärung</span>
           </div>
           <div className="w-7 h-7 rounded-full bg-gray-100 overflow-hidden">
-            <img src="/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
+            <img src="/avenzo-website/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
           </div>
         </div>
 
@@ -312,7 +401,7 @@ function PhoneSteuer({ }: { theme: string }) {
               {/* Avenzo logo as AI indicator */}
               <div className="relative w-16 h-16 flex items-center justify-center mb-7 st2-1">
                 <div className="w-14 h-14 bg-gray-900 rounded-2xl flex items-center justify-center shadow-med">
-                  <img src="/avenzo_icon.svg" className="w-7 h-7 object-contain" style={{ filter: "brightness(0) invert(1)" }} alt="" />
+                  <img src="/avenzo-website/avenzo_icon.svg" className="w-7 h-7 object-contain" style={{ filter: "brightness(0) invert(1)" }} alt="" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl border border-gray-900/10 animate-ping" style={{ animationDuration: "2s" }} />
               </div>
@@ -424,17 +513,19 @@ function PhoneSteuer({ }: { theme: string }) {
 /* ─── Phone: Versicherung ─── */
 function PhoneVersicherung({ }: { theme: string }) {
   return (
-    <div className="relative w-[270px] sm:w-[285px] h-[555px] sm:h-[585px] bg-device-body rounded-[2.8rem] border-[6px] border-device-border shadow-device overflow-hidden">
+    <div className="relative w-[220px] sm:w-[270px] md:w-[285px] h-[450px] sm:h-[555px] md:h-[585px] bg-device-body rounded-[2rem] sm:rounded-[2.8rem] border-[5px] sm:border-[6px] border-device-border shadow-device overflow-hidden">
       <DynamicIsland />
       <div className="w-full h-full bg-white pt-12 flex flex-col">
         {/* App header */}
         <div className="px-5 pt-2.5 pb-2 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <img src="/avenzo_icon.svg" className="h-[14px] w-auto object-contain" style={{ filter: "brightness(0)" }} alt="Avenzo" />
+            <img src="/avenzo-website/avenzo_icon.svg" className="h-[16px] w-auto object-contain" style={{ filter: "brightness(0)" }} alt="Avenzo" />
             <span className="text-[10px] font-bold tracking-[0.08em] text-gray-900">avenzo</span>
+            <div className="w-px h-3 bg-gray-200" />
+            <span className="text-[9px] font-semibold tracking-wide text-app-insurance">Versicherung</span>
           </div>
           <div className="w-7 h-7 rounded-full bg-gray-100 overflow-hidden">
-            <img src="/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
+            <img src="/avenzo-website/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
           </div>
         </div>
 
@@ -638,8 +729,10 @@ function BrowserTreuhand() {
         <div className="hidden md:flex w-[200px] border-r border-gray-100 p-4 flex-col bg-surface-subtle shrink-0">
           {/* Logo */}
           <div className="flex items-center gap-2 mb-6">
-            <img src="/avenzo_icon.svg" className="h-4 w-auto object-contain" style={{ filter: "brightness(0)" }} alt="" />
+            <img src="/avenzo-website/avenzo_icon.svg" className="h-[16px] w-auto object-contain" style={{ filter: "brightness(0)" }} alt="" />
             <span className="text-[10px] font-bold tracking-[0.08em] text-gray-900">avenzo</span>
+            <div className="w-px h-3 bg-gray-200" />
+            <span className="text-[9px] font-semibold tracking-wide text-app-treuhand">Treuhand</span>
           </div>
 
           {/* Nav items */}
@@ -665,7 +758,7 @@ function BrowserTreuhand() {
           {/* Expert chat shortcut */}
           <div className="mt-auto flex items-center gap-2 p-2.5 rounded-xl bg-white border border-gray-100">
             <div className="w-6 h-6 rounded-full bg-gray-200 overflow-hidden shrink-0">
-              <img src="/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
+              <img src="/avenzo-website/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
             </div>
             <div>
               <div className="text-[8px] font-semibold text-gray-900">Denis M.</div>
@@ -686,7 +779,7 @@ function BrowserTreuhand() {
               <div className="text-[8px] text-gray-400 font-medium mt-0.5">Muster GmbH · März 2026</div>
             </div>
             <div className="w-6 h-6 rounded-full bg-gray-100 overflow-hidden">
-              <img src="/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
+              <img src="/avenzo-website/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
             </div>
           </div>
 
@@ -715,7 +808,7 @@ function BrowserTreuhand() {
 
             <div className="flex gap-2 mb-2">
               <div className="w-5 h-5 rounded-full bg-gray-100 shrink-0 overflow-hidden mt-0.5">
-                <img src="/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
+                <img src="/avenzo-website/denis-whitebg-removebg-preview.png" className="w-full h-full object-cover object-top" alt="" />
               </div>
               <div className="bg-surface-subtle p-2.5 rounded-xl rounded-tl-sm text-[8px] text-gray-600 font-medium leading-relaxed border border-gray-100 max-w-[85%]">
                 MWST-Abrechnung H1 ist finalisiert. Zahlungsanweisung liegt bereit. Import starten?

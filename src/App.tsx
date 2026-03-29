@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { OriginalConcept } from "./pages/OriginalConcept";
 import { PaylineConcept } from "./pages/PaylineConcept";
 

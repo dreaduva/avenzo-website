@@ -27,20 +27,20 @@ export function PaylineConcept() {
   return (
     <div className="bg-white min-h-screen font-sans text-gray-900 selection:bg-accent selection:text-accent-text relative transition-colors duration-500">
       {/* Floating Theme Switcher */}
-      <div className="fixed bottom-6 left-6 z-[100] bg-white p-2 rounded-full shadow-nav border border-gray-100 flex items-center gap-2">
+      <div className="fixed bottom-20 right-3 sm:bottom-6 sm:right-auto sm:left-6 z-[100] bg-white p-1.5 sm:p-2 rounded-full shadow-nav border border-gray-100 flex items-center gap-1.5 sm:gap-2">
         <button
           onClick={() => setTheme("neon")}
-          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${theme === "neon" ? "bg-dark shadow-md scale-110" : "bg-gray-100 text-gray-400 hover:bg-gray-200"}`}
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all ${theme === "neon" ? "bg-dark shadow-md scale-110" : "bg-gray-100 text-gray-400 hover:bg-gray-200"}`}
           title="Neon Theme"
         >
-          <div className="w-4 h-4 rounded-full bg-accent"></div>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-accent"></div>
         </button>
         <button
           onClick={() => setTheme("original")}
-          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${theme === "original" ? "bg-dark shadow-md scale-110" : "bg-gray-100 text-gray-400 hover:bg-gray-200"}`}
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all ${theme === "original" ? "bg-dark shadow-md scale-110" : "bg-gray-100 text-gray-400 hover:bg-gray-200"}`}
           title="Original Theme"
         >
-          <div className="w-4 h-4 rounded-full bg-brand-green"></div>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-brand-green"></div>
         </button>
       </div>
 

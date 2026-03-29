@@ -515,6 +515,10 @@ html:not(.dark) .logo-white-only { filter: brightness(0) invert(1); }
   50% { transform: translateY(-20px) rotate(var(--tw-rotate, 0)); }
 }
 
+/* Hide scrollbar on mobile card carousel */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* Mobile menu slide-down */
 @keyframes fadeSlideDown {
   from { opacity: 0; transform: translateY(-8px); }
@@ -530,5 +534,8 @@ html:not(.dark) .logo-white-only { filter: brightness(0) invert(1); }
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 70px;
+}
+@media (min-width: 640px) {
+  html { scroll-padding-top: 100px; }
 }
