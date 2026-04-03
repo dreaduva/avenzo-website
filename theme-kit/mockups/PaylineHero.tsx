@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import lohnausweis from "../../assets/lohnsteuerausweis.png";
+import lohnausweis from "../assets/lohnsteuerausweis.png";
 
 type TabId = "steuer" | "versicherung" | "treuhand";
 

@@ -51,7 +51,7 @@ export function PaylineServices() {
         {/* Service 2: Versicherungen */}
         <div className="bg-surface rounded-[1.5rem] sm:rounded-[var(--radius-card)] p-6 sm:p-10 hover:bg-white border border-transparent hover:border-gray-100 hover:shadow-card-lift transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden group flex flex-col">
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center mb-5 sm:mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10">
-             <svg className="w-6 h-6 sm:w-7 sm:h-7 text-app-insurance" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+             <svg className="w-6 h-6 sm:w-7 sm:h-7 text-app-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
           </div>
 
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900 relative z-10">Versicherungen</h3>
@@ -80,7 +80,7 @@ export function PaylineServices() {
         {/* Service 3: Treuhand */}
         <div className="bg-surface rounded-[1.5rem] sm:rounded-[var(--radius-card)] p-6 sm:p-10 hover:bg-white border border-transparent hover:border-gray-100 hover:shadow-card-lift transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden group flex flex-col">
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center mb-5 sm:mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10">
-             <svg className="w-6 h-6 sm:w-7 sm:h-7 text-app-treuhand" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+             <svg className="w-6 h-6 sm:w-7 sm:h-7 text-app-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
           </div>
 
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900 relative z-10">Treuhand</h3>

@@ -1,0 +1,14 @@
+export { ThemeNavbar } from "./ThemeNavbar";
+export { ThemeHero } from "./ThemeHero";
+export { ThemePartners } from "./ThemePartners";
+export { ThemeServices } from "./ThemeServices";
+export { ThemeFeatures } from "./ThemeFeatures";
+export { ThemeHowItWorks } from "./ThemeHowItWorks";
+export { ThemeCalculator } from "./ThemeCalculator";
+export { ThemeTestimonials } from "./ThemeTestimonials";
+export { ThemeFaq } from "./ThemeFaq";
+export { ThemeCtaFooter } from "./ThemeCtaFooter";
+export { ThemeCookieBanner } from "./ThemeCookieBanner";
+export { ThemeScrollToTop } from "./ThemeScrollToTop";
+export { ThemePricingSection } from "./ThemePricingSection";
+export { ThemeSwitcher } from "./ThemeSwitcher";

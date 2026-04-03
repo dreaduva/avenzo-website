@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════════════════════
+   THEME TOKENS — Single source of truth for all design decisions.
+   Change values here to re-skin the entire site.
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+
+  /* ─── Brand ─── */
+  --color-brand-dark: #050706;
+  --color-brand-green: #1c5a4b;
+  --color-brand-green-light: #34a088;
+
+  /* ─── Accent system (primary brand color — Emerald default) ─── */
+  --color-accent: #10B981;
+  --color-accent-hover: #059669;
+  --color-accent-dark: #047857;
+  --color-accent-text: #FFFFFF;
+  --color-accent-tint-1: #D1FAE5;
+  --color-accent-tint-2: #A7F3D0;
+  --color-accent-tint-3: #6EE7B7;
+  --color-accent-tint-4: #34D399;
+  --color-accent-deep: #034D38;
+
+  /* ─── App-specific accents ─── */
+  --color-app-secondary: #3B5BDB;
+  --color-app-tertiary: #7C3AED;
+
+  /* ─── Surfaces ─── */
+  --color-surface: #F6FBF9;
+  --color-surface-alt: #EFF7F3;
+  --color-surface-subtle: #F9FCFA;
+  --color-dark: #0E201A;
+  --color-darker: #081510;
+
+  /* ─── Device mockup ─── */
+  --color-device-body: #0a0a0a;
+  --color-device-border: #1a1a1a;
+  --color-device-screen: #111111;
+
+  /* ─── Status ─── */
+  --color-status-pending: #f59e0b;
+
+  /* ─── Decorative ─── */
+  --color-decorative-blue: #3b82f6;
+  --color-decorative-red: #ef4444;
+  --color-decorative-purple: #a855f7;
+
+  /* ─── Browser chrome (traffic lights) ─── */
+  --color-chrome-close: #ff5f56;
+  --color-chrome-minimize: #ffbd2e;
+  --color-chrome-maximize: #27c93f;
+
+  /* ─── Shadows ─── */
+  --shadow-nav: 0 8px 30px rgb(0 0 0 / 0.12);
+  --shadow-card: 0 8px 30px rgb(0 0 0 / 0.04);
+  --shadow-card-hover: 0 20px 40px rgb(0 0 0 / 0.08);
+  --shadow-card-lift: 0 20px 40px rgb(0 0 0 / 0.06);
+  --shadow-device: 0 24px 48px -12px rgb(0 0 0 / 0.2);
+  --shadow-device-lg: 0 20px 60px -10px rgba(0, 0, 0, 0.3);
+  --shadow-widget: 0 30px 60px rgba(0, 0, 0, 0.4);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-med: 0 6px 20px -4px rgba(0, 0, 0, 0.2);
+  --shadow-inner: 0 8px 30px -4px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+  /* RGB triplet for accent — used in rgba() shadows/glows */
+  --accent-rgb: 180, 255, 41;
+
+  /* Easing */
+  --ease-premium: cubic-bezier(0.2, 1, 0.2, 1);
+
+  /* Radii — overridden by theme presets */
+  --radius-card: 2.5rem;
+  --radius-card-lg: 3rem;
+  --radius-phone: 2.8rem;
+
+  /* Card style tokens — overridden by theme engine */
+  --card-bg: var(--color-surface);
+  --card-bg-hover: #FFFFFF;
+  --card-border: transparent;
+  --card-border-hover: rgba(0, 0, 0, 0.06);
+  --card-backdrop: none;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  --card-shadow-hover: 0 20px 40px rgba(0,0,0,0.06);
+
+  /* Nav tokens */
+  --nav-bg: var(--color-dark);
+  --nav-border: rgba(255,255,255,0.1);
+  --nav-backdrop: blur(12px);
+
+  /* Section / badge tokens */
+  --section-bg: var(--color-surface);
+  --badge-bg: var(--color-surface);
+  --badge-border: rgba(0, 0, 0, 0.06);
+  --input-bg: var(--color-surface);
+  --surface-on-dark: rgba(255,255,255,0.05);
+  --surface-on-dark-border: rgba(255,255,255,0.1);
+
+  /* Inner element tokens (icon boxes, checkmarks inside cards) */
+  --inner-bg: #FFFFFF;
+  --inner-border: rgba(0, 0, 0, 0.05);
+  --inner-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  /* Nav text tokens */
+  --nav-text: #FFFFFF;
+  --nav-text-muted: rgba(255, 255, 255, 0.65);
+
+  /* Card-on-dark tokens (widget cards on dark sections like calculator) */
+  --card-on-dark-bg: #FFFFFF;
+  --card-on-dark-border: rgba(255, 255, 255, 0.2);
+}

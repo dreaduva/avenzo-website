@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════════════════════════════
+   BASE — Global element styles, scrolling, font smoothing.
+   ═══════════════════════════════════════════════════════════════ */
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s var(--ease-premium), color 0.4s var(--ease-premium);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
+@media (min-width: 640px) {
+  html { scroll-padding-top: 100px; }
+}
+
+/* Hide scrollbar on card carousels */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

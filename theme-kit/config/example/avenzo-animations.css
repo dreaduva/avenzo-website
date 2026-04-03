@@ -1,0 +1,156 @@
+/* ═══════════════════════════════════════════════════════════════
+   AVENZO-SPECIFIC ANIMATIONS
+   Steuer mockup, Insurance mockup, AI agent loader animations.
+   This file is brand-specific and should NOT be copied to other projects.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Steuer mockup — 14s cycle (3 screens) ─── */
+
+@keyframes screenFade1 {
+  0%, 18% { opacity: 1; pointer-events: auto; }
+  22%, 96% { opacity: 0; pointer-events: none; }
+  100% { opacity: 1; pointer-events: auto; }
+}
+@keyframes screenFade2 {
+  0%, 20% { opacity: 0; pointer-events: none; }
+  24%, 60% { opacity: 1; pointer-events: auto; }
+  64%, 100% { opacity: 0; pointer-events: none; }
+}
+@keyframes screenFade3 {
+  0%, 62% { opacity: 0; pointer-events: none; }
+  66%, 90% { opacity: 1; pointer-events: auto; }
+  94%, 100% { opacity: 0; pointer-events: none; }
+}
+
+@keyframes barFade2 {
+  0%, 20% { background-color: #e5e7eb; }
+  24%, 100% { background-color: var(--color-accent); }
+}
+@keyframes barFade3 {
+  0%, 62% { background-color: #e5e7eb; }
+  66%, 100% { background-color: var(--color-accent); }
+}
+
+/* Step 1 staggers */
+@keyframes st1a { 0% { opacity: 0; transform: translateY(8px); } 4%, 16% { opacity: 1; transform: translateY(0); } 20%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(8px); } }
+@keyframes st1b { 0%, 4% { opacity: 0; transform: translateY(8px); } 8%, 16% { opacity: 1; transform: translateY(0); } 20%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(8px); } }
+@keyframes st1c { 0%, 8% { opacity: 0; transform: translateY(8px); } 12%, 16% { opacity: 1; transform: translateY(0); } 20%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(8px); } }
+
+/* Step 2 staggers */
+@keyframes st2a { 0%, 22% { opacity: 0; transform: translateY(8px); } 25%, 58% { opacity: 1; transform: translateY(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2b { 0%, 26% { opacity: 0; transform: translateY(6px); } 29%, 58% { opacity: 1; transform: translateY(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2c { 0%, 32% { opacity: 0; transform: translateY(6px); } 35%, 58% { opacity: 1; transform: translateY(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2d { 0%, 38% { opacity: 0; transform: translateY(6px); } 41%, 58% { opacity: 1; transform: translateY(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2r1 { 0%, 27% { opacity: 0; transform: translateX(-5px); } 30%, 58% { opacity: 1; transform: translateX(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2r2 { 0%, 29% { opacity: 0; transform: translateX(-5px); } 32%, 58% { opacity: 1; transform: translateX(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2r3 { 0%, 31% { opacity: 0; transform: translateX(-5px); } 34%, 58% { opacity: 1; transform: translateX(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2d1 { 0%, 34% { opacity: 0; transform: translateX(-5px); } 37%, 58% { opacity: 1; transform: translateX(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2d2 { 0%, 36% { opacity: 0; transform: translateX(-5px); } 39%, 58% { opacity: 1; transform: translateX(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2d3 { 0%, 38% { opacity: 0; transform: translateX(-5px); } 41%, 58% { opacity: 1; transform: translateX(0); } 62%, 100% { opacity: 0; } }
+@keyframes st2total { 0%, 40% { opacity: 0; transform: scale(0.95); } 43%, 58% { opacity: 1; transform: scale(1); } 62%, 100% { opacity: 0; transform: scale(0.95); } }
+@keyframes st2bar { 0%, 24% { width: 0; } 34% { width: 45%; } 44%, 58% { width: 85%; } 62%, 100% { width: 0; } }
+
+/* Step 3 staggers */
+@keyframes st3a { 0%, 64% { opacity: 0; transform: translateY(8px); } 67%, 88% { opacity: 1; transform: translateY(0); } 92% { opacity: 0; } 100% { opacity: 0; transform: translateY(8px); } }
+@keyframes st3b { 0%, 68% { opacity: 0; transform: translateY(8px); } 71%, 88% { opacity: 1; transform: translateY(0); } 92% { opacity: 0; } 100% { opacity: 0; transform: translateY(8px); } }
+@keyframes st3c { 0%, 72% { opacity: 0; transform: translateY(8px); } 75%, 88% { opacity: 1; transform: translateY(0); } 92% { opacity: 0; } 100% { opacity: 0; transform: translateY(8px); } }
+@keyframes st3num { 0%, 68% { opacity: 0; transform: scale(0.9); } 72%, 88% { opacity: 1; transform: scale(1); } 92% { opacity: 0; } 100% { opacity: 0; transform: scale(0.9); } }
+
+.st1-1 { animation: st1a 14s ease-out infinite; }
+.st1-2 { animation: st1b 14s ease-out infinite; }
+.st1-3 { animation: st1c 14s ease-out infinite; }
+.st2-1 { animation: st2a 14s ease-out infinite; }
+.st2-2 { animation: st2b 14s ease-out infinite; }
+.st2-3 { animation: st2c 14s ease-out infinite; }
+.st2-4 { animation: st2d 14s ease-out infinite; }
+.st2-r1 { animation: st2r1 14s ease-out infinite; }
+.st2-r2 { animation: st2r2 14s ease-out infinite; }
+.st2-r3 { animation: st2r3 14s ease-out infinite; }
+.st2-d1 { animation: st2d1 14s ease-out infinite; }
+.st2-d2 { animation: st2d2 14s ease-out infinite; }
+.st2-d3 { animation: st2d3 14s ease-out infinite; }
+.st2-total { animation: st2total 14s ease-out infinite; }
+.st2-bar { animation: st2bar 14s ease-out infinite; }
+.st3-1 { animation: st3a 14s ease-out infinite; }
+.st3-2 { animation: st3b 14s ease-out infinite; }
+.st3-3 { animation: st3c 14s ease-out infinite; }
+.st3-num { animation: st3num 14s ease-out infinite; }
+.anim-fade-1 { animation: screenFade1 14s ease-in-out infinite; }
+.anim-fade-2 { animation: screenFade2 14s ease-in-out infinite; }
+.anim-fade-3 { animation: screenFade3 14s ease-in-out infinite; }
+.anim-fade-2-bar { animation: barFade2 14s ease-in-out infinite; }
+.anim-fade-3-bar { animation: barFade3 14s ease-in-out infinite; }
+
+/* ─── AI Agent — Avenzo outline wave + cycle text ─── */
+
+@keyframes aiOutlineWave {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.6; }
+}
+.ai-outline-wave { animation: aiOutlineWave 1.6s ease-in-out infinite; }
+
+@keyframes aiCycleText {
+  0%, 24% { content: 'Dokumente scannen'; }
+  25%, 49% { content: 'Abzüge erkennen'; }
+  50%, 74% { content: 'Beträge optimieren'; }
+  75%, 100% { content: 'Steuerformular prüfen'; }
+}
+.ai-cycle-text::after {
+  content: 'Dokumente scannen';
+  animation: aiCycleText 6s step-end infinite;
+}
+
+/* ─── Insurance mockup — 14s cycle ─── */
+
+@keyframes ins1 {
+  0%, 44% { opacity: 1; pointer-events: auto; }
+  48%, 96% { opacity: 0; pointer-events: none; }
+  100% { opacity: 1; pointer-events: auto; }
+}
+@keyframes ins2 {
+  0%, 46% { opacity: 0; pointer-events: none; }
+  50%, 94% { opacity: 1; pointer-events: auto; }
+  98%, 100% { opacity: 0; pointer-events: none; }
+}
+
+@keyframes s1i { 0% { opacity: 0; transform: translateY(10px); } 5%, 44% { opacity: 1; transform: translateY(0); } 48%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s1i2 { 0%, 1% { opacity: 0; transform: translateY(10px); } 6%, 44% { opacity: 1; transform: translateY(0); } 48%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s1i3 { 0%, 2% { opacity: 0; transform: translateY(10px); } 7%, 44% { opacity: 1; transform: translateY(0); } 48%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s1i4 { 0%, 3% { opacity: 0; transform: translateY(10px); } 8%, 44% { opacity: 1; transform: translateY(0); } 48%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s1i5 { 0%, 4% { opacity: 0; transform: translateY(10px); } 9%, 44% { opacity: 1; transform: translateY(0); } 48%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+
+@keyframes barCurrent { 0%, 2% { width: 0; } 8%, 44% { width: 100%; } 48%, 96% { width: 100%; } 100% { width: 0; } }
+@keyframes barBrand { 0%, 3% { width: 0; } 10%, 44% { width: 82%; } 48%, 96% { width: 82%; } 100% { width: 0; } }
+@keyframes savingsIn { 0%, 10% { opacity: 0; transform: translateY(4px); } 14%, 44% { opacity: 1; transform: translateY(0); } 48%, 96% { opacity: 0; } 100% { opacity: 0; transform: translateY(4px); } }
+
+@keyframes s2i { 0%, 48% { opacity: 0; transform: translateY(10px); } 54%, 94% { opacity: 1; transform: translateY(0); } 98% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s2i2 { 0%, 50% { opacity: 0; transform: translateY(10px); } 56%, 94% { opacity: 1; transform: translateY(0); } 98% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s2i3 { 0%, 52% { opacity: 0; transform: translateY(10px); } 58%, 94% { opacity: 1; transform: translateY(0); } 98% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+@keyframes s2i4 { 0%, 54% { opacity: 0; transform: translateY(10px); } 60%, 94% { opacity: 1; transform: translateY(0); } 98% { opacity: 0; } 100% { opacity: 0; transform: translateY(10px); } }
+
+@keyframes drawLine { 0%, 52% { stroke-dashoffset: 300; } 72%, 94% { stroke-dashoffset: 0; } 98%, 100% { stroke-dashoffset: 300; } }
+@keyframes areaIn { 0%, 52% { opacity: 0; } 72%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }
+@keyframes dotIn { 0%, 70% { opacity: 0; transform: scale(0); } 76%, 94% { opacity: 1; transform: scale(1); } 98%, 100% { opacity: 0; transform: scale(0); } }
+
+@keyframes pd1 { 0%, 44% { background-color: #111827; width: 16px; } 48%, 96% { background-color: #d1d5db; width: 8px; } 100% { background-color: #111827; width: 16px; } }
+@keyframes pd2 { 0%, 46% { background-color: #d1d5db; width: 8px; } 50%, 94% { background-color: #111827; width: 16px; } 98%, 100% { background-color: #d1d5db; width: 8px; } }
+
+.anim-2screen-1 { animation: ins1 14s ease-in-out infinite; }
+.anim-2screen-2 { animation: ins2 14s ease-in-out infinite; }
+.s1-stagger-1 { animation: s1i 14s ease-out infinite; }
+.s1-stagger-2 { animation: s1i2 14s ease-out infinite; }
+.s1-stagger-3 { animation: s1i3 14s ease-out infinite; }
+.s1-stagger-4 { animation: s1i4 14s ease-out infinite; }
+.s1-stagger-5 { animation: s1i5 14s ease-out infinite; }
+.anim-bar-current { animation: barCurrent 14s ease-out infinite; }
+.anim-bar-brand { animation: barBrand 14s ease-out infinite; }
+.anim-savings-reveal { animation: savingsIn 14s ease-out infinite; }
+.s2-stagger-1 { animation: s2i 14s ease-out infinite; }
+.s2-stagger-2 { animation: s2i2 14s ease-out infinite; }
+.s2-stagger-3 { animation: s2i3 14s ease-out infinite; }
+.s2-stagger-4 { animation: s2i4 14s ease-out infinite; }
+.anim-draw-line { animation: drawLine 14s ease-out infinite; stroke-dasharray: 300; }
+.anim-area-fill { animation: areaIn 14s ease-out infinite; }
+.anim-chart-dot { animation: dotIn 14s ease-out infinite; }
+.anim-pagedot-1 { animation: pd1 14s ease-in-out infinite; }
+.anim-pagedot-2 { animation: pd2 14s ease-in-out infinite; }

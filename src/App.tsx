@@ -1,14 +1,14 @@
 import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { OriginalConcept } from "./pages/OriginalConcept";
-import { PaylineConcept } from "./pages/PaylineConcept";
-
+import { ThemePage } from "./pages/ThemePage";
+import { avenzo } from "./config/avenzo/avenzo.config";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/original" element={<OriginalConcept />} />
-        <Route path="/new-concept" element={<PaylineConcept />} />
+        <Route path="/new-concept/*" element={<ThemePage config={avenzo} />} />
       </Routes>
     </Router>
   );
@@ -29,7 +29,7 @@ function Home() {
           to="/new-concept"
           className="px-8 py-4 bg-[#B4FF29] text-black rounded-xl shadow-lg hover:-translate-y-1 transition-transform font-bold"
         >
-          New Concept (Payline Style)
+          New Concept (Theme System)
         </Link>
       </div>
     </div>

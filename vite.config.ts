@@ -8,7 +8,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/avenzo-website/',
+  // Set base path for deployment (e.g. '/my-site/' for GitHub Pages)
+  // base: '/avenzo-website/',
   server: {
     allowedHosts: true,
   },
